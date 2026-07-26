@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compound — Performance-Based Growth Partner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12140E;--ink2:#1A1E14;--ink3:#20251A;--card:#191D13;
+  --paper:#EAEEE0;--paper2:#9BA48C;--paper3:#828C71;
+  --stamp:#4ADE93;--stamp-deep:#2E9C68;--stamp-dim:rgba(74,222,147,.1);--stamp-line:rgba(74,222,147,.35);
+  --line:rgba(234,238,224,.13);--line2:rgba(234,238,224,.07);
+  --sf:'Spectral',serif;--sn:'IBM Plex Sans',sans-serif;--mn:'IBM Plex Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+body{
+  background:var(--ink);color:var(--paper);font-family:var(--sn);font-size:15px;line-height:1.6;
+  background-image:repeating-linear-gradient(180deg,rgba(255,255,255,.018) 0px,rgba(255,255,255,.018) 2px,transparent 2px,transparent 34px);
+}
+a{color:inherit}
+::selection{background:var(--stamp);color:#0b1108}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:3px}
+img,svg{display:block;max-width:100%}
+.con{max-width:1180px;margin:0 auto;padding:0 32px}
+.fu{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.fu.in{opacity:1;transform:translateY(0)}
+
+.eyebrow{font-family:var(--mn);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--stamp);display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.eyebrow::after{content:'';height:1px;flex:1;max-width:70px;background:var(--stamp-line)}
+h2.st{font-family:var(--sf);font-weight:500;font-size:clamp(30px,3.6vw,46px);line-height:1.08;letter-spacing:-.5px;color:var(--paper)}
+h2.st em{font-style:italic;color:var(--stamp)}
+.lede{font-size:15.5px;color:var(--paper2);line-height:1.8;max-width:620px;margin-top:18px}
+
+.btn{font-family:var(--mn);font-size:12.5px;font-weight:600;letter-spacing:.5px;padding:14px 26px;text-decoration:none;display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:1.5px solid transparent;transition:all .2s}
+.btn-p{background:var(--stamp);color:#0b1108}
+.btn-p:hover{background:var(--stamp-deep);color:#fff;transform:translateY(-2px)}
+.btn-o{border-color:var(--line);color:var(--paper);background:transparent}
+.btn-o:hover{border-color:var(--stamp);color:var(--stamp)}
+
+header{position:sticky;top:0;z-index:100;background:rgba(18,20,14,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd{height:74px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand svg{width:30px;height:30px;flex-shrink:0}
+.brand-txt{font-family:var(--mn);font-weight:700;font-size:16px;letter-spacing:2px;color:var(--paper)}
+nav{display:flex;align-items:center;gap:34px}
+.nl{display:flex;gap:30px}
+.nl a{font-family:var(--mn);font-size:11.5px;letter-spacing:1px;text-decoration:none;color:var(--paper2);transition:color .2s}
+.nl a:hover{color:var(--stamp)}
+.hamb{display:none;background:none;border:none;cursor:pointer;padding:6px;flex-direction:column;gap:5px}
+.hamb span{width:22px;height:2px;background:var(--paper)}
+
+#hero{padding:76px 0 90px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.ht{font-family:var(--sf);font-weight:500;font-size:clamp(38px,5.2vw,64px);line-height:1.04;letter-spacing:-1px;margin-bottom:22px;color:var(--paper)}
+.ht em{font-style:italic;color:var(--stamp)}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.trust-line{font-family:var(--mn);font-size:11px;color:var(--paper3);letter-spacing:.5px;margin-top:20px}
+.trust-line b{color:var(--stamp);font-weight:600}
+
+.stamp-wrap{display:flex;justify-content:center;align-items:center;position:relative}
+.stamp-glow{position:absolute;width:340px;height:340px;background:radial-gradient(circle,rgba(74,222,147,.16) 0%,transparent 68%);pointer-events:none}
+.stamp{width:min(280px,80vw);filter:drop-shadow(0 0 22px rgba(74,222,147,.18));position:relative}
+.stamp .arc-txt{font-family:var(--mn);font-size:8.4px;letter-spacing:3px;fill:var(--stamp)}
+.stamp .ring{fill:none;stroke:var(--stamp)}
+.stamp .ring-o{stroke-width:2.2;stroke-dasharray:2.2 3.4;stroke-linecap:round}
+.stamp .ring-i{stroke-width:1.1;opacity:.6}
+.stamp .center-1{font-family:var(--sf);font-style:italic;font-weight:600;font-size:27px;fill:var(--stamp)}
+.stamp .center-2{font-family:var(--mn);font-weight:600;font-size:12px;letter-spacing:2px;fill:var(--paper)}
+.stamp .serial{font-family:var(--mn);font-size:8px;letter-spacing:1px;fill:var(--paper3)}
+
+section{border-top:1px solid var(--line)}
+#hero{border-top:none}
+
+/* FRAMEWORK / CHECKLIST */
+#framework{padding:96px 0}
+.checklist{margin-top:44px;border:1.5px solid var(--line);background:var(--card)}
+.chk-row{display:grid;grid-template-columns:30px 1fr;gap:20px;padding:24px 26px;border-bottom:1px solid var(--line)}
+.chk-row:last-child{border-bottom:none}
+.chk-ic{width:22px;height:22px;flex-shrink:0;margin-top:3px}
+.chk-ic rect{fill:none;stroke:var(--stamp);stroke-width:1.6}
+.chk-ic path{stroke:var(--stamp);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
+.chk-t{font-family:var(--sf);font-weight:600;font-size:18px;margin-bottom:6px;color:var(--paper)}
+.chk-d{font-size:13.5px;color:var(--paper2);line-height:1.75}
+
+/* LEDGER / MODEL */
+#model{padding:96px 0}
+.ledger{margin-top:44px;border:1.5px solid var(--line);background:var(--card)}
+.lrow{display:grid;grid-template-columns:28px 1fr 150px;gap:20px;align-items:start;padding:22px 26px;border-bottom:1px solid var(--line)}
+.lrow:last-child{border-bottom:none}
+.lrow.total{background:var(--ink3)}
+.ln{font-family:var(--mn);font-size:11px;color:var(--paper3);padding-top:3px}
+.li-name{font-family:var(--sf);font-weight:600;font-size:18px;margin-bottom:5px;color:var(--paper)}
+.li-desc{font-size:13.5px;color:var(--paper2);line-height:1.7}
+.li-tag{font-family:var(--mn);font-size:10px;letter-spacing:1px;text-align:right;padding-top:4px;white-space:nowrap}
+.li-tag.free{color:var(--paper3)}
+.li-tag.billed{color:var(--stamp);font-weight:700}
+.note-box{margin-top:26px;border-left:3px solid var(--stamp);background:var(--stamp-dim);padding:20px 24px}
+.note-box .nb-t{font-family:var(--mn);font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--stamp);margin-bottom:9px;font-weight:700}
+.note-box p{font-size:13px;color:var(--paper2);line-height:1.8}
+
+/* PROCESS */
+#process{padding:96px 0}
+.steps{margin-top:48px;display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:78px 1fr;gap:24px;padding:28px 0;border-top:1px solid var(--line2)}
+.step:first-child{border-top:none}
+.step-n{font-family:var(--sf);font-style:italic;font-size:38px;color:var(--stamp);opacity:.55;line-height:1}
+.step-t{font-family:var(--sf);font-weight:600;font-size:20px;margin-bottom:6px;color:var(--paper)}
+.step-d{font-size:13.5px;color:var(--paper2);line-height:1.75;max-width:640px}
+
+/* SERVICES */
+#services{padding:96px 0}
+.svc-grid{margin-top:44px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc{background:var(--card);padding:30px 26px}
+.svc-i{font-family:var(--mn);font-size:10px;color:var(--stamp);letter-spacing:1.5px;margin-bottom:12px}
+.svc-t{font-family:var(--sf);font-weight:600;font-size:18px;margin-bottom:9px;color:var(--paper)}
+.svc-d{font-size:13px;color:var(--paper2);line-height:1.7}
+
+/* WHY */
+#why{padding:96px 0}
+.why-grid{margin-top:44px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.why-c{background:var(--card);padding:30px 28px}
+.why-t{font-family:var(--sf);font-weight:600;font-size:19px;margin-bottom:9px;color:var(--paper)}
+.why-d{font-size:13.5px;color:var(--paper2);line-height:1.75}
+
+/* CTA */
+#contact{padding:110px 0;text-align:center}
+.ctat{font-family:var(--sf);font-weight:500;font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.5px;color:var(--paper)}
+.ctat em{font-style:italic;color:var(--stamp)}
+.ctas{font-size:14.5px;color:var(--paper2);max-width:480px;margin:18px auto 34px;line-height:1.8}
+.ctab{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.cline{font-family:var(--mn);font-size:11px;color:var(--paper3);margin-top:26px;letter-spacing:.5px}
+
+footer{padding:30px 0;border-top:1px solid var(--line)}
+.ft-in{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.ft-l{font-family:var(--mn);font-size:11px;color:var(--paper3)}
+.ft-l b{color:var(--stamp)}
+.ft-r{display:flex;align-items:center;gap:8px;font-family:var(--mn);font-size:11px;color:var(--paper3)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--stamp);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(74,222,147,.5)}50%{box-shadow:0 0 0 5px rgba(74,222,147,0)}}
+
+@media (max-width:880px){
+  .hero-grid{grid-template-columns:1fr}
+  .stamp-wrap{order:-1;margin-bottom:8px}
+  .stamp{width:200px}
+  .nl,.hd .btn{display:none}
+  .hamb{display:flex}
+  .svc-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .lrow{grid-template-columns:22px 1fr}
+  .li-tag{grid-column:2;text-align:left;padding-top:0}
+  .step{grid-template-columns:52px 1fr}
+  .chk-row{grid-template-columns:24px 1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="con hd">
+    <a href="#hero" class="brand">
+      <svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="none" stroke="#4ADE93" stroke-width="2"/><circle cx="15" cy="15" r="8.5" fill="none" stroke="#4ADE93" stroke-width="1"/></svg>
+      <span class="brand-txt">COMPOUND</span>
+    </a>
+    <nav>
+      <div class="nl">
+        <a href="#framework">Framework</a>
+        <a href="#model">How it works</a>
+        <a href="#process">Process</a>
+        <a href="#services">Services</a>
+      </div>
+      <a href="#contact" class="btn btn-p">Get free audit</a>
+    </nav>
+    <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<section id="hero">
+  <div class="con hero-grid">
+    <div class="fu">
+      <div class="eyebrow">PERFORMANCE-BASED GROWTH PARTNER · ANY INDUSTRY</div>
+      <h1 class="ht">You see the result first.<br>The invoice comes <em>second</em>.</h1>
+      <p class="lede">We plan, build, and run the full growth campaign at zero upfront cost. A share of the fee is only ever billed against a result we've proven — measured from a baseline we lock together before day one.</p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-p">Get a free growth audit →</a>
+        <a href="#model" class="btn btn-o">See how the model works</a>
+      </div>
+      <div class="trust-line">No retainer &nbsp;·&nbsp; No setup fee &nbsp;·&nbsp; <b>No result, no invoice</b></div>
+    </div>
+    <div class="stamp-wrap fu">
+      <div class="stamp-glow"></div>
+      <svg class="stamp" viewBox="0 0 240 240">
+        <circle class="ring ring-o" cx="120" cy="120" r="104"/>
+        <circle class="ring ring-i" cx="120" cy="120" r="90"/>
+        <path id="arcTop" d="M 32,140 A 90,90 0 1 1 208,140" fill="none"/>
+        <text class="arc-txt"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">PERFORMANCE VERIFIED · PERFORMANCE VERIFIED ·</textPath></text>
+        <path id="arcBot" d="M 208,108 A 90,90 0 1 1 32,108" fill="none"/>
+        <text class="arc-txt"><textPath href="#arcBot" startOffset="50%" text-anchor="middle">ZERO RISK TO CLIENT · ZERO RISK TO CLIENT ·</textPath></text>
+        <text class="center-1" x="120" y="118" text-anchor="middle">Zero Fee</text>
+        <text class="center-2" x="120" y="140" text-anchor="middle">UNTIL PROVEN</text>
+        <text class="serial" x="120" y="160" text-anchor="middle">NO. 0001 · EST. 2026</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="framework">
+  <div class="con">
+    <div class="fu">
+      <div class="eyebrow">THE METHOD</div>
+      <h2 class="st">Five checks. Every engagement, <em>every industry</em>.</h2>
+      <p class="lede">Before a channel is chosen or a word of copy is written, every engagement is run against the same five lines — whether the client sells enterprise software, coffee, or crypto.</p>
+    </div>
+    <div class="checklist fu">
+      <div class="chk-row">
+        <svg class="chk-ic" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="3"/><path d="M5 10.5l3 3 7-7"/></svg>
+        <div><div class="chk-t">A real, specific problem</div><div class="chk-d">Proven with search data, customer language, or a competitor gap — never a guess dressed up as a strategy.</div></div>
+      </div>
+      <div class="chk-row">
+        <svg class="chk-ic" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="3"/><path d="M5 10.5l3 3 7-7"/></svg>
+        <div><div class="chk-t">The right, narrow audience</div><div class="chk-d">We'd rather own a small, specific segment completely than whisper to everyone at once.</div></div>
+      </div>
+      <div class="chk-row">
+        <svg class="chk-ic" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="3"/><path d="M5 10.5l3 3 7-7"/></svg>
+        <div><div class="chk-t">Trust before payment</div><div class="chk-d">Every relationship opens with free value — a real audit, a real insight — before anything is asked in return.</div></div>
+      </div>
+      <div class="chk-row">
+        <svg class="chk-ic" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="3"/><path d="M5 10.5l3 3 7-7"/></svg>
+        <div><div class="chk-t">Provable results</div><div class="chk-d">Checked against a locked baseline. If it can't be measured, it isn't claimed.</div></div>
+      </div>
+      <div class="chk-row">
+        <svg class="chk-ic" viewBox="0 0 20 20"><rect x="1" y="1" width="18" height="18" rx="3"/><path d="M5 10.5l3 3 7-7"/></svg>
+        <div><div class="chk-t">Consistency until it compounds</div><div class="chk-d">The channels that outlast paid spend are the ones we build first — trust, once earned, keeps paying for itself.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="model">
+  <div class="con">
+    <div class="fu">
+      <div class="eyebrow">THE MODEL</div>
+      <h2 class="st">A statement, not a <em>retainer</em>.</h2>
+      <p class="lede">Most agencies invoice on a calendar, whether or not anything moved. This one invoices on a result. Everything below the strategy line is free until it's proven.</p>
+    </div>
+
+    <div class="ledger fu">
+      <div class="lrow">
+        <div class="ln">01</div>
+        <div><div class="li-name">Strategy &amp; diagnosis</div><div class="li-desc">Audience research, competitor mapping, and a plan built for your category — not a template.</div></div>
+        <div class="li-tag free">NO CHARGE</div>
+      </div>
+      <div class="lrow">
+        <div class="ln">02</div>
+        <div><div class="li-name">Full campaign execution</div><div class="li-desc">Content, channels, and outreach — built and run end-to-end, before a cent changes hands.</div></div>
+        <div class="li-tag free">NO CHARGE</div>
+      </div>
+      <div class="lrow">
+        <div class="ln">03</div>
+        <div><div class="li-name">Baseline &amp; tracking setup</div><div class="li-desc">A locked, mutually agreed starting point — so results are provable, not a feeling.</div></div>
+        <div class="li-tag free">NO CHARGE</div>
+      </div>
+      <div class="lrow total">
+        <div class="ln">04</div>
+        <div><div class="li-name">Verified performance lift</div><div class="li-desc">A pre-agreed share of the proven increase over baseline. Nothing else is billed, ever.</div></div>
+        <div class="li-tag billed">BILLED ON RESULT</div>
+      </div>
+    </div>
+
+    <div class="note-box fu">
+      <div class="nb-t">What counts as "verified"</div>
+      <p>Before any work starts, we lock a baseline from the 4–8 weeks prior — the period is chosen together, avoiding one-off spikes or crashes. Where relevant, results are also compared against a category benchmark, so a market-wide swing isn't mistaken for campaign impact. Progress is reported on a fixed cadence, in the open, before any invoice is ever raised.</p>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="con">
+    <div class="fu">
+      <div class="eyebrow">HOW WE WORK</div>
+      <h2 class="st">Five steps. One shared <em>ledger</em>.</h2>
+    </div>
+    <div class="steps fu">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div><div class="step-t">Free audit &amp; diagnosis</div><div class="step-d">We map your market, your competitors, and the specific gap worth closing — before anything is billed or committed.</div></div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div><div class="step-t">A framework built for your category</div><div class="step-d">Not generic marketing — a plan drawn from the channels your buyers already use, whether that's SEO, paid search, content, or community.</div></div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div><div class="step-t">Baseline locked, campaign launched</div><div class="step-d">Tracking goes live on day one. Free execution begins immediately, in full view.</div></div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div><div class="step-t">Results verified, reported transparently</div><div class="step-d">Progress shared on a fixed schedule, measured against the baseline — including what isn't working yet.</div></div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div><div class="step-t">You pay only the agreed share</div><div class="step-d">One proven result becomes the case for the next round — every engagement makes the next one easier to trust.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="con">
+    <div class="fu">
+      <div class="eyebrow">WHAT'S INCLUDED</div>
+      <h2 class="st">Channels, matched to where your buyers <em>already</em> are.</h2>
+    </div>
+    <div class="svc-grid fu">
+      <div class="svc"><div class="svc-i">01 · RESEARCH</div><div class="svc-t">Research &amp; positioning</div><div class="svc-d">Audience segmentation, competitor mapping, and a clear point of difference before a single channel is chosen.</div></div>
+      <div class="svc"><div class="svc-i">02 · ORGANIC</div><div class="svc-t">SEO &amp; content</div><div class="svc-d">Content built to earn trust and rank — the kind of reach that keeps compounding after we stop touching it.</div></div>
+      <div class="svc"><div class="svc-i">03 · PAID</div><div class="svc-t">SEM &amp; paid social</div><div class="svc-d">Precision targeting once a message is proven — spend that amplifies what already works, not a guess.</div></div>
+      <div class="svc"><div class="svc-i">04 · COMMUNITY</div><div class="svc-t">Community &amp; retention</div><div class="svc-d">A direct, human presence where your audience already gathers — the trust that keeps them coming back.</div></div>
+      <div class="svc"><div class="svc-i">05 · PROOF</div><div class="svc-t">Analytics &amp; reporting</div><div class="svc-d">Baseline, attribution, and a transparent report on the same schedule, every time — no vanity metrics.</div></div>
+      <div class="svc"><div class="svc-i">06 · FIT</div><div class="svc-t">Built for any category</div><div class="svc-d">The channel mix changes with your audience and industry. The standard of proof never does.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="con">
+    <div class="fu">
+      <div class="eyebrow">WHY THIS WORKS</div>
+      <h2 class="st">Trust compounds. Interruption <em>doesn't</em>.</h2>
+    </div>
+    <div class="why-grid fu">
+      <div class="why-c"><div class="why-t">Risk, reversed</div><div class="why-d">You don't take a bet on marketing. We do — the model only works if the result shows up first.</div></div>
+      <div class="why-c"><div class="why-t">Earned beats bought</div><div class="why-d">Audiences trust what a brand builds far more than what it pays to appear in front of them.</div></div>
+      <div class="why-c"><div class="why-t">Measured, not felt</div><div class="why-d">Every claim is checked against a baseline agreed before we start — never judged by vibes or vanity metrics.</div></div>
+      <div class="why-c"><div class="why-t">Built for your category</div><div class="why-d">The channels shift with your audience and industry. The standard of proof stays exactly the same.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="con fu">
+    <div class="ctat">Ready to see the result <em>before</em><br>the invoice?</div>
+    <p class="ctas">Tell us about your business — we'll come back with a free audit and a plan built for your category. No obligation, no charge.</p>
+    <div class="ctab">
+      <a href="mailto:hello@compound.agency" class="btn btn-p">Request a free audit →</a>
+      <a href="#framework" class="btn btn-o">See the method</a>
+    </div>
+    <div class="cline">hello@compound.agency &nbsp;·&nbsp; Response within 48 hours</div>
+  </div>
+</section>
+
+<footer>
+  <div class="con ft-in">
+    <div class="ft-l"><b>COMPOUND</b> — Performance-Based Growth Partner</div>
+    <div class="ft-r"><span class="dot"></span>Available for new engagements · Any industry</div>
+  </div>
+</footer>
+
+<script>
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+},{threshold:.12});
+document.querySelectorAll('.fu').forEach(el=>io.observe(el));
+
+const hamb=document.querySelector('.hamb');
+const nl=document.querySelector('.nl');
+if(hamb){
+  hamb.addEventListener('click',()=>{
+    const open=nl.style.display==='flex';
+    nl.style.display=open?'none':'flex';
+    nl.style.cssText+=open?'':';position:absolute;top:74px;left:0;right:0;background:var(--ink);flex-direction:column;gap:0;padding:8px 32px 18px;border-bottom:1px solid var(--line)';
+  });
+}
+</script>
+</body>
+</html>
