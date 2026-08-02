@@ -318,6 +318,10 @@ footer{padding:30px 0;border-top:1px solid var(--line)}
         <input type="text" id="leadName" class="form-control" placeholder="John Doe" required>
       </div>
       <div class="form-group">
+        <label>No. HP / Email Pribadi</label>
+        <input type="text" id="leadContact" class="form-control" placeholder="0812xxxxxxx atau you@email.com" required>
+      </div>
+      <div class="form-group">
         <label>Company Website / Brand Name</label>
         <input type="text" id="leadCompany" class="form-control" placeholder="www.yourcompany.com" required>
       </div>
@@ -358,7 +362,9 @@ if(hamb){
   });
 }
 
-// 3. GitHub Pages Safe Form Handler with Telegram Webhook
+// 3. Lead Form Handler — reads the real transaction status from the GAS backend
+const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyR4UtjL3bmCfChv0ccE0YkmfdPDOE8k6ZEK04X_zSPQyE4dLrG9eudAnk-N4zfY9I/exec';
+
 document.getElementById('leadForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -367,30 +373,45 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
   btn.style.opacity = '0.7';
   btn.disabled = true;
 
-  // Ekstraksi payload dari form Klien
   const payload = {
     nama: document.getElementById('leadName').value,
+    kontak: document.getElementById('leadContact').value,
     perusahaan: document.getElementById('leadCompany').value,
     ad_spend: document.getElementById('leadSpend').value
   };
 
-  // URL Webhook Absolut Anda (Google Apps Script -> Telegram Bot)
-  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzTUAbSowMaAJcOZ09HDdqJloitXY8_9dKnWCsAQKahQ6-xWMZTY-9vqfFpfn6mQtQ/exec';
-
-  // Transmisi Data Asinkron
   fetch(WEBHOOK_URL, {
     method: 'POST',
-    mode: 'no-cors', // Bypass kebijakan CORS statis
-    headers: { 'Content-Type': 'application/json' },
+    // text/plain keeps this a CORS "simple request" so the browser never
+    // sends an OPTIONS preflight — Apps Script Web Apps can't answer
+    // preflight requests, so this header choice isn't optional.
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify(payload)
-  }).then(() => {
-    btn.style.display = 'none';
-    document.getElementById('formSuccess').style.display = 'block';
-  }).catch(err => {
-    btn.textContent = 'System Error. Try Again.';
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  });
+  })
+    .then(async (response) => {
+      // Layer 1: transport / platform failure (GAS execution crash, deploy issue)
+      if (!response.ok) {
+        throw new Error(`Transport error: HTTP ${response.status}`);
+      }
+      const data = await response.json();
+      // Layer 2: application-level failure (e.g. Telegram send failed).
+      // GAS returns a real HTTP 200 whenever doPost() completes normally,
+      // so success/failure lives in this JSON body, not in response.status.
+      if (data.status !== 'success') {
+        throw new Error(data.message || 'Backend reported a failure.');
+      }
+      return data;
+    })
+    .then(() => {
+      btn.style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    })
+    .catch(err => {
+      console.error('Lead submission failed:', err);
+      btn.textContent = 'System Error. Try Again.';
+      btn.style.opacity = '1';
+      btn.disabled = false;
+    });
 });
 
 // Restore sample report PDF (re-embedded)
