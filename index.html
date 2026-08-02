@@ -348,8 +348,8 @@ const io=new IntersectionObserver(entries=>{
 document.querySelectorAll('.fu').forEach(el=>io.observe(el));
 
 // 2. Mobile Nav Menu
-const hamb=document.querySelector('.hamb');
-const nl=document.querySelector('.nl');
+const hamb=document.getElementById('mobile-menu-btn');
+const nl=document.getElementById('nav-links');
 if(hamb){
   hamb.addEventListener('click',()=>{
     const open=nl.style.display==='flex';
@@ -358,37 +358,41 @@ if(hamb){
   });
 }
 
-// 3. GitHub Pages Safe Form Handler
+// 3. GitHub Pages Safe Form Handler with Webhook
 document.getElementById('leadForm').addEventListener('submit', function(e) {
-  e.preventDefault(); // Mencegah reload halaman (Sangat Penting untuk Github Pages)
+  e.preventDefault(); 
   
   const btn = this.querySelector('button');
   btn.textContent = 'Routing Data...';
   btn.style.opacity = '0.7';
-  
-  // Simulasi proses pengiriman agar terlihat profesional
-  setTimeout(() => {
-     btn.style.display = 'none';
-     document.getElementById('formSuccess').style.display = 'block';
-  }, 1200);
+  btn.disabled = true;
 
-  /* 
-  CATATAN: Nanti saat Anda sudah punya URL dari Google Apps Script (Telegram),
-  Anda bisa menghapus komentar di bawah ini dan memasukkan URL Anda.
-  
+  // Ekstraksi payload dari form Klien
   const payload = {
     nama: document.getElementById('leadName').value,
     perusahaan: document.getElementById('leadCompany').value,
     ad_spend: document.getElementById('leadSpend').value
   };
   
-  fetch('MASUKKAN_URL_GOOGLE_SCRIPT_DI_SINI', {
+  // URL Webhook Absolut Anda
+  const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyR4UtjL3bmCfChv0ccE0YkmfdPDOE8k6ZEK04X_zSPQyE4dLrG9eudAnk-N4zfY9I/exec';
+
+  // Transmisi Data Asinkron
+  fetch(WEBHOOK_URL, {
     method: 'POST',
-    mode: 'no-cors',
+    mode: 'no-cors', // Bypass kebijakan CORS statis
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
+  }).then(() => {
+    btn.style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }).catch(err => {
+    btn.textContent = 'System Error. Try Again.';
+    btn.style.opacity = '1';
+    btn.disabled = false;
   });
-  */
+});
+</script>
 });
 
 // Restore sample report PDF (re-embedded)
