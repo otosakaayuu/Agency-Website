@@ -378,10 +378,11 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
   const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyR4UtjL3bmCfChv0ccE0YkmfdPDOE8k6ZEK04X_zSPQyE4dLrG9eudAnk-N4zfY9I/exec';
 
   // Transmisi Data Asinkron
+  // Transmisi Data Asinkron (Bulletproof CORS Bypass)
   fetch(WEBHOOK_URL, {
     method: 'POST',
-    mode: 'no-cors', // Bypass kebijakan CORS statis
-    headers: { 'Content-Type': 'application/json' },
+    // Hapus baris mode: 'no-cors' agar tidak diblokir saat redirect
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // Samarkan sebagai teks biasa
     body: JSON.stringify(payload)
   }).then(() => {
     btn.style.display = 'none';
